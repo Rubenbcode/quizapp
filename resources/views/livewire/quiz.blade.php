@@ -9,16 +9,13 @@
         <div class="w-8/12 mx-auto h-auto rounded-full dark:bg-gray-700 mb-8">
             <div class="progress-bar h-auto text-sm" style="width:{{$percent}}%">{{$progress}}%</div>
         </div>
-
         @if(!$finish)
         <div class="w-10/12 h-auto shadow-lg bg-gray-20 mx-auto p-4 flex flex-col">
             <h3 class=" text-xl p-2 text-gray-800 font-bold text-center">Q : {{$actual_question->title}}</h3>
-
             <p class=" text-md text-justify p-4 my-4 text-gray-700 bg-gray-100 rounded-lg font-bold shadow-lg">{{$actual_question->description}}</h3>
-
             <div class="w-full p-2 flex flex-col mx-auto">
                 @for($e = 1; $e<=4;$e++)
-                    <x-answer  count="{{$e}}" answer='{{$actual_question["answer_$e"]}}' ></x-answer>
+                    <x-answer  :count='$e' :answer='$actual_question["answer_$e"]' ></x-answer>
                 @endfor
             </div>
 

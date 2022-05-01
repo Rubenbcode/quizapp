@@ -1,6 +1,5 @@
 <x-app-layout>
-    
-    <div class="h-32 bg-cover bg-center  bg-no-repeat" style="background-image:url({{$subject->icon}});transition: .8s;">
+    <div class="h-32 bg-cover bg-center  bg-no-repeat" style="background-image:url({{$subject->icon}})">
        <div class="h-32 p-6 flex flex-col" style="background: rgba(0,0,0,0.6)">
         <nav class="text-white text-lg flex justify-center items-center font-light ">
             <svg class="mr-2 w-4 h-4 inline-flex"
@@ -27,23 +26,27 @@
     </div>
 
     <div class="w-8/12 mt-6 shadow-md h-auto mx-auto p-4">
-        <ul class="w-full p-4 ">
+        <ul class="w-full p-4">
             @foreach($levels as $level)
-            <li class="w-full flex flex-col ">
-                <p class="text-lg text-gray-700 text-semibold flex  items-center">
-                    <svg class="inline-flex" width="10" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512"><path d="M458.622 255.92l45.985-45.005c13.708-12.977 7.316-36.039-10.664-40.339l-62.65-15.99l17.661-62.015c4.991-17.838-11.829-34.663-29.661-29.671l-61.994 17.667l-15.984-62.671C337.085.197 313.765-6.276 300.99 7.228L256 53.57L211.011 7.229c-12.63-13.351-36.047-7.234-40.325 10.668l-15.984 62.671l-61.995-17.667C74.87 57.907 58.056 74.738 63.046 92.572l17.661 62.015l-62.65 15.99C.069 174.878-6.31 197.944 7.392 210.915l45.985 45.005l-45.985 45.004c-13.708 12.977-7.316 36.039 10.664 40.339l62.65 15.99l-17.661 62.015c-4.991 17.838 11.829 34.663 29.661 29.671l61.994-17.667l15.984 62.671c4.439 18.575 27.696 24.018 40.325 10.668L256 458.61l44.989 46.001c12.5 13.488 35.987 7.486 40.325-10.668l15.984-62.671l61.994 17.667c17.836 4.994 34.651-11.837 29.661-29.671l-17.661-62.015l62.65-15.99c17.987-4.302 24.366-27.367 10.664-40.339l-45.984-45.004z" fill="currentColor"></path></svg>
-                    Grado {{$level->level_order}}</p>
-                N* de cuestionarios : {{count($level->quizzes)}}
-                <ul class="w-full p-4 ">
-                    @foreach($level->quizzes()->orderBy('created_at','ASC')->get() as $quiz)
-                        <x-item-question :name="$quiz->name" :count="count($quiz->questions)" >
-                            <a class="w-full rounded-sm text-center shadow-md bg-red-600 text-white text-md font-light" href="{{route('quiz',[$category,$subject,$level,$quiz])}}">Realizar cuestionario</a>
-                        </x-item-question>
-
-                    @endforeach
-                </ul>
-            </li>
-            
+                <li class="w-full flex flex-col mb-10">
+                    <div class="w-full flex justify-between items-center" >
+                        <div class="flex items-center">
+                            <svg class="inline-flex mr-4" width="20" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512"><path d="M80 368H16a16 16 0 0 0-16 16v64a16 16 0 0 0 16 16h64a16 16 0 0 0 16-16v-64a16 16 0 0 0-16-16zm0-320H16A16 16 0 0 0 0 64v64a16 16 0 0 0 16 16h64a16 16 0 0 0 16-16V64a16 16 0 0 0-16-16zm0 160H16a16 16 0 0 0-16 16v64a16 16 0 0 0 16 16h64a16 16 0 0 0 16-16v-64a16 16 0 0 0-16-16zm416 176H176a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h320a16 16 0 0 0 16-16v-32a16 16 0 0 0-16-16zm0-320H176a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h320a16 16 0 0 0 16-16V80a16 16 0 0 0-16-16zm0 160H176a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h320a16 16 0 0 0 16-16v-32a16 16 0 0 0-16-16z" fill="currentColor"></path></svg>
+                            <p class="text-lg text-light">Grado {{$level->level_order}}</p>
+                        </div>
+                        <p class="text-gray-500 "> Cuestionarios disponibles : {{count($level->quizzes)}}</p>
+                    </div>
+                    <ul class="w-full p-4">
+                        @foreach($level->quizzes()->orderBy('created_at','ASC')->get() as $quiz)
+                            <x-item-question :name="$quiz->name" :count="count($quiz->questions)">
+                                    <a class="flex items-center justify-center py-2 w-full rounded-sm  shadow-md bg-red-600 hover:bg-red-800 " href="{{route('quiz',[$category,$subject,$level,$quiz])}}">
+                                        <svg class="mr-4 text-white" width="20" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512"><path d="M256 8C119 8 8 119 8 256s111 248 248 248s248-111 248-248S393 8 256 8zm115.7 272l-176 101c-15.8 8.8-35.7-2.5-35.7-21V152c0-18.4 19.8-29.8 35.7-21l176 107c16.4 9.2 16.4 32.9 0 42z" fill="currentColor"></path></svg>
+                                        <p class="text-white text-md font-semibold">Realizar cuestionario</p></a>
+                                    </a>
+                            </x-item-question>
+                        @endforeach
+                    </ul>
+                </li>
             @endforeach
         </ul>
     </div>
