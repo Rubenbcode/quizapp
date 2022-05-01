@@ -1,0 +1,4 @@
+.progress-bar{
+    @apply bg-blue-600 text-gray-100 font-semibold text-center p-3 leading-none rounded-full ;
+    transition: width 1s;
+}
